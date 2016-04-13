@@ -1,3 +1,4 @@
+require 'open-uri'
 class WordsController < ApplicationController
   def index
 
@@ -6,6 +7,8 @@ class WordsController < ApplicationController
   def register
     ### NOTE: mecab は細かく単語を区切るのでキーワードを採掘しにくい
     ###       http://so-zou.jp/web-app/text/morpheme/ で採掘する
+
+    ### TODO: エラー処理
     api_url = 'http://so-zou.jp/web-app/text/morpheme/analyze.php'
 
     doc = Nokogiri::HTML(open("http://www.kochoran.ne.jp/"))
@@ -14,5 +17,8 @@ class WordsController < ApplicationController
 
     strs = JSON.parse(res.body).map { |data| data["baseform"] if data["pos"] == "名詞" }.compact.uniq
     strs = strs.reject { |a| a =~ /\w+/ }
+
+    words = (strs - Kw::Word.where(name: strs).pluck(:name)).map { |name| Kw::Word.new(name: name) }
+    Kw::Word.import words
   end
 end

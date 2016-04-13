@@ -1,4 +1,4 @@
-module KW
-  class KW::Word < KW::Base
+module Kw
+  class Word < Kw::Base
   end
 end
