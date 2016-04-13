@@ -24,6 +24,7 @@ gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim-rails'
 gem 'haml-rails'
+gem 'kaminari'
 
 # JS
 gem 'gon'
