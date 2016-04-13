@@ -211,6 +211,8 @@ GEM
     minitest (5.8.4)
     multi_json (1.11.2)
     mysql2 (0.3.20)
+    natto (1.1.0)
+      ffi (>= 1.9.0)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -460,6 +462,7 @@ DEPENDENCIES
   jquery-ui-rails
   launchy
   mysql2 (~> 0.3.20)
+  natto
   opengraph_parser
   poltergeist
   pry

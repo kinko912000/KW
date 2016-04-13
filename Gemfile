@@ -14,6 +14,7 @@ gem 'draper'
 gem 'config'
 gem 'enumerize'
 gem 'opengraph_parser'
+gem 'natto'
 
 # View
 gem 'sass-rails', '~> 5.0', require: false
