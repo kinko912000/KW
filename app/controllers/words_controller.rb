@@ -3,12 +3,31 @@ require 'csv'
 
 class WordsController < ApplicationController
   def index
+    ### TODO: searcher に切り出し
+    @words = Kw::Word.all
 
+    if params[:fetched].present?
+      if params[:fetched] == 'false'
+        @words = Kw::Word.unfetched
+      else
+        @words = Kw::Word.fetched
+      end
+    end
+
+    if params[:selected].present?
+      if params[:selected] == 'false'
+        @words = @words.unselected
+      else
+        @words = @words.selected
+      end
+    end
+
+    @words = @words.page(params[:page]).per(30)
   end
 
   def download
     csv_data = CSV.generate do |csv|
-      Kw::Word.all.each do |word|
+      Kw::Word.unfetched.limit(1000).each do |word|
         csv << [word.name]
       end
     end

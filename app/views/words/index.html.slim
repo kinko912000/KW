@@ -4,3 +4,31 @@
 p
  | 未取得のCSVをダウンロード:
  = link_to "csv download", download_words_path
+
+= link_to "ホーム", words_path
+= link_to "Adwords API 取得済一覧", words_path(fetched: true)
+= link_to "Adwords API 未取得一覧", words_path(fetched: false)
+
+= paginate @words
+
+table
+  thead
+    tr
+      th キーワード名
+      th クエリ数(/月)
+      th 競合性
+      th 単価
+      th AdWords API
+  tbody
+    - @words.each do |word|
+      tr
+        td= word.name
+        td= word.avg_searches
+        td= word.competition
+        td= word.suggested_bid
+        td
+          - if word.fetched
+            | 取得済
+          - else
+            | 未取得
+= paginate @words
