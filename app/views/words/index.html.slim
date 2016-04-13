@@ -1,0 +1,3 @@
+= form_tag register_words_path, method: :post do
+  = text_field_tag :url, ''
+  = button_tag '取得', class: 'button', data: {'disable-with' => "更新中..."}
