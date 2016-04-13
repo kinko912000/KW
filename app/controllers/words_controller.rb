@@ -1,7 +1,19 @@
 require 'open-uri'
+require 'csv'
+
 class WordsController < ApplicationController
   def index
 
+  end
+
+  def download
+    csv_data = CSV.generate do |csv|
+      Kw::Word.all.each do |word|
+        csv << [word.name]
+      end
+    end
+
+    send_data csv_data, filename: "keywords_#{Time.current}"
   end
 
   def register
@@ -17,6 +29,7 @@ class WordsController < ApplicationController
 
     strs = JSON.parse(res.body).map { |data| data["baseform"] if data["pos"] == "名詞" }.compact.uniq
     strs = strs.reject { |a| a =~ /\w+/ }
+    strs = strs.map { |str| "胡蝶蘭 #{str}" }
 
     words = (strs - Kw::Word.where(name: strs).pluck(:name)).map { |name| Kw::Word.new(name: name) }
     Kw::Word.import words
