@@ -28,7 +28,7 @@
 
 # Ignore db export file
 db/seeds/exports/*.csv
-
+config/database.yml
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
