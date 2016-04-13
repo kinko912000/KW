@@ -15,6 +15,8 @@ gem 'config'
 gem 'enumerize'
 gem 'opengraph_parser'
 gem 'natto'
+gem "delayed_job"
+gem "delayed_job_active_record"
 
 # View
 gem 'sass-rails', '~> 5.0', require: false

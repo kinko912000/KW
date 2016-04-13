@@ -105,6 +105,11 @@ GEM
     debase-ruby_core_source (0.8.6)
     debug_inspector (0.0.2)
     deep_merge (1.0.1)
+    delayed_job (4.1.1)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.1.0)
+      activerecord (>= 3.0, < 5)
+      delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
@@ -448,6 +453,8 @@ DEPENDENCIES
   config
   database_cleaner
   debase
+  delayed_job
+  delayed_job_active_record
   dotenv-rails (= 1.0.2)
   draper
   enumerize
