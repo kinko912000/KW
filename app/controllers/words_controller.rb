@@ -22,7 +22,8 @@ class WordsController < ApplicationController
       end
     end
 
-    @words = @words.page(params[:page]).per(30)
+    @words = @words.order(updated_at: :desc, avg_searches: :desc).page(params[:page]).per(30)
+    @count = Kw::Word.where.not(avg_searches: nil).count
   end
 
   def download
