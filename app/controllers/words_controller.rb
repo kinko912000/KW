@@ -38,7 +38,7 @@ class WordsController < ApplicationController
   def register
     ### NOTE: mecab は細かく単語を区切るのでキーワードを採掘しにくい
     ###       http://so-zou.jp/web-app/text/morpheme/ で採掘する
-    KeywordRegisterService.delay.mult_register_by_urls(parse_urls)
+    KeywordRegisterService.delay.multi_register!(parse_urls)
     redirect_to words_path
   end
 
