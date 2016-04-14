@@ -4,9 +4,17 @@ module AdwordsFetcher
   PAGE_SIZE = 1000
 
   def self.update_keyword_query_volumes
-    Kw::Word.unfetched.find_in_batches(batch_size: 1000) do |words|
+    #Kw::Word.unfetched.find_in_batches(batch_size: 1000) do |words|
+    Kw::Word.unfetched.limit(10).find_in_batches(batch_size: 1000) do |words|
       keyword_list = words.map { |word| word.name }
-      get_keyword_ideas(keyword_list)
+      results = get_keyword_ideas(keyword_list)
+
+      ActiveRecord::Base.transaction do
+        results.each { |result| update_query_volumes!(result[:data]) }
+        Kw::Word.where(id: words.map(&:id)).update_all(fetched: true)
+      end
+
+      puts "Total keywords related to %d." % results.length
     end
   end
 
@@ -26,20 +34,16 @@ module AdwordsFetcher
       offset += PAGE_SIZE
       selector[:paging][:start_index] = offset
     end while offset < page[:total_num_entries]
-
-    results.each { |result|update_query_volumes!(result[:data]) }
-
-    puts "Total keywords related to '%s': %d." % [keyword_text, results.length]
+    results
   end
 
   def self.update_query_volumes!(data)
-    keyword = data['KEYWORD_TEXT'][:value],
+    keyword = data['KEYWORD_TEXT'][:value]
 
-    if word = Kw::Word.find_by(name: keyword)
+    if word = Kw::Word.find_by(name: keyword).presence
       word_params = {
-        avg_searches: data['TARGETED_MONTHLY_SEARCHES'][:value],
+        avg_searches: data['SEARCH_VOLUME'][:value],
         competition: data['COMPETITION'][:value],
-        suggested_bid: data['AVERAGE_CPC'][:value],
       }
       word.update_attributes(word_params)
     else
@@ -51,9 +55,6 @@ module AdwordsFetcher
     requested_attribute_types = [
       'KEYWORD_TEXT',
       'SEARCH_VOLUME',
-      'CATEGORY_PRODUCTS_AND_SERVICES',
-      'TARGETED_MONTHLY_SEARCHES',
-      'AVERAGE_CPC',
       'COMPETITION'
     ]
 
@@ -87,3 +88,4 @@ module AdwordsFetcher
     }
   end
 end
+AdwordsFetcher.update_keyword_query_volumes
