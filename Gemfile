@@ -17,6 +17,7 @@ gem 'opengraph_parser'
 gem 'natto'
 gem "delayed_job"
 gem "delayed_job_active_record"
+gem 'google-adwords-api'
 
 # View
 gem 'sass-rails', '~> 5.0', require: false
