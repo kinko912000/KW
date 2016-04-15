@@ -2,28 +2,34 @@ require 'open-uri'
 module GoogleSearchFetcher
   def self.update(word)
     url = generate_search_url(word.name)
-    primary_url = fetch_primary_url(url)
-    word.primary_url = primary_url
-    puts "could not save: #{word.name}" unless word.save
+    search_url_params = fetch_url_params(url)
+    puts "could not save: #{word.name}" unless word.update_attributes(search_url_params)
   end
 
 
-  def self.fetch_primary_url(url)
+  def self.fetch_url_params(url)
     open(URI.encode(url)) do |res|
       begin
         doc = Nokogiri::HTML(res)
-        primary_url = nil
+        result = {primary_url: nil, second_url: nil}
         doc.css('.g h3 a').each do |dom|
           link = dom.attribute('href').value.scan(/http.*/).first
-          if link.present?
-            primary_url = link.gsub(/&sa.*/, '')
-            puts "url: #{url}, primary_url: #{primary_url}"
+          next puts "nothing: #{dom.attribute('href').value}" unless link.present?
+
+          link = link.gsub(/&sa.*/, '')
+          if result[:primary_url].blank?
+            puts "url: #{url}, primary_url: #{link}"
+            result[:primary_url] = link
+            next
+          end
+
+          if result[:second_url].blank?
+            puts "url: #{url}, second_url: #{link}"
+            result[:second_url] = link
             break
-          else
-            puts "nothing: #{dom.attribute('href').value}"
           end
         end
-        primary_url
+        result
       rescue => e
         puts "############# ERROR ##############"
         puts "Error URL: #{url}"
