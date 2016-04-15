@@ -23,8 +23,10 @@ class WordsController < ApplicationController
     end
 
     @words = @words.order(avg_searches: :desc, updated_at: :desc).page(params[:page]).per(30)
-    @same_words_list = Kw::Word.where(primary_url: @words.map(&:primary_url)).
+    @same_primary_url_list = Kw::Word.where(primary_url: @words.map(&:primary_url)).
       group_by { |word| word.primary_url }
+    @same_second_url_list = Kw::Word.where(second_url: @words.map(&:second_url)).
+      group_by { |word| word.second_url }
     @count = Kw::Word.where.not(avg_searches: nil).count
   end
 
