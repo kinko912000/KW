@@ -18,7 +18,8 @@ table
       th キーワード名
       th クエリ数(/月)
       th 競合性
-      th 単価
+      th 1位と2位同じ検索結果
+      th 1位のみ同じ検索結果
       th AdWords API
   tbody
     - @words.each do |word|
@@ -26,7 +27,10 @@ table
         td= word.name
         td= word.avg_searches
         td= word.competition
-        td= word.suggested_bid
+        - if word.primary_url.present?
+          td= (@same_words_list[word.primary_url].map(&:name) - [word.name]).join(',')
+        - else
+          td= 'なし'
         td
           - if word.fetched
             | 取得済
