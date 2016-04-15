@@ -45,6 +45,6 @@ class WordsController < ApplicationController
 
   def parse_urls
     return [] unless params[:urls].present?
-    params[:urls].split(/\n/)
+    params[:urls].split(/\r\n|\n/)
   end
 end
