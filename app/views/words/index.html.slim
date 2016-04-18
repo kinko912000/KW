@@ -1,16 +1,3 @@
-h3= "取得済キーワード: #{@count}"
-ul
-  li= link_to "URLから単語登録", new_by_urls_words_path
-  li= link_to "単語登録", new_word_path
-
-p
- | 未取得のCSVをダウンロード:
- = link_to "csv download", download_words_path
-
-= link_to "ホーム", words_path
-= link_to "Adwords API 取得済一覧", words_path(fetched: true)
-= link_to "Adwords API 未取得一覧", words_path(fetched: false)
-
 = paginate @words
 
 table

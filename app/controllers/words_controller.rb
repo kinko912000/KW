@@ -27,7 +27,6 @@ class WordsController < ApplicationController
       group_by { |word| word.primary_url }
     @same_second_url_list = Kw::Word.where(second_url: @words.map(&:second_url)).
       group_by { |word| word.second_url }
-    @count = Kw::Word.where.not(avg_searches: nil).count
   end
 
   def download

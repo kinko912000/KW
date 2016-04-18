@@ -1,7 +1,3 @@
-ul
-  li= link_to "ホーム", words_path
-  li= link_to "URLから単語登録", new_by_urls_words_path
-
 = form_tag words_path, method: :post do
   = text_area_tag :words, '', placeholder: '１行に１単語かいてください', rows: 10, cols: 100
   br
