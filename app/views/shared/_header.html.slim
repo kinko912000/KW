@@ -1,5 +1,4 @@
 h3= "取得済キーワード: #{@count}"
-= link_to "ホーム", words_path
 
 table
   thead
@@ -15,8 +14,13 @@ table
           li= link_to "単語登録", new_word_path
       td
         ul
+          li= link_to "全表示", words_path
           li= link_to "Adwords API 取得済一覧", words_path(fetched: true)
-          li= link_to "Adwords API 未取得一覧", words_path(fetched: false)
+          li= link_to "未選択キーワード", words_path(selected: false)
+        = form_tag words_path, method: :get do
+          = text_field_tag :name
+          = button_tag '検索'
+
       td
         ul
           | クエリ数未取得キーワード:

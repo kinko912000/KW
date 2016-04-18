@@ -22,6 +22,8 @@ class WordsController < ApplicationController
       end
     end
 
+    @words = @words.search(name_cont: params[:name]).result if params[:name].present?
+
     @words = @words.order(avg_searches: :desc, updated_at: :desc).page(params[:page]).per(30)
     @same_primary_url_list = Kw::Word.where(primary_url: @words.map(&:primary_url)).
       group_by { |word| word.primary_url }
