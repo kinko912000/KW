@@ -238,6 +238,7 @@ GEM
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
+    mime (0.4.3)
     mime-types (3.0)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0221)
@@ -364,6 +365,10 @@ GEM
       rubocop
     ruby-debug-ide (0.6.0)
       rake (>= 0.8.1)
+    ruby-gmail (0.3.1)
+      mail (>= 2.2.1)
+      mime (>= 0.1)
+      shared-mime-info
     ruby-progressbar (1.7.5)
     ruby2ruby (2.3.0)
       ruby_parser (~> 3.1)
@@ -396,6 +401,7 @@ GEM
       activerecord (>= 3.1, < 4.3)
       activesupport (>= 3.1, < 4.3)
     sexp_processor (4.7.0)
+    shared-mime-info (0.2.5)
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
@@ -532,6 +538,7 @@ DEPENDENCIES
   rubocop
   rubocop-rspec-focused
   ruby-debug-ide
+  ruby-gmail
   sass-rails (~> 5.0)
   sassc-rails
   sdoc (~> 0.4.0)
