@@ -42,6 +42,6 @@ module KeywordRegisterService
   end
 
   def self.format_words(words)
-    words.map { |word| word.gsub(/(\s|　)+/, ' ') }
+    words.map { |word| word.gsub(/(\s|　)+/, ' ').strip }
   end
 end

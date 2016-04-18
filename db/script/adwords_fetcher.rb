@@ -4,8 +4,7 @@ module AdwordsFetcher
   PAGE_SIZE = 1000
 
   def self.update_keyword_query_volumes
-    #Kw::Word.unfetched.find_in_batches(batch_size: 1000) do |words|
-    Kw::Word.unfetched.limit(10).find_in_batches(batch_size: 1000) do |words|
+    Kw::Word.unfetched.find_in_batches(batch_size: 1000) do |words|
       keyword_list = words.map { |word| word.name }
       results = get_keyword_ideas(keyword_list)
 
