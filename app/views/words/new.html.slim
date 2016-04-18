@@ -1,7 +1,10 @@
 ul
   li= link_to "ホーム", words_path
-  li= link_to "URLから単語登録", new_by_urls_path
+  li= link_to "URLから単語登録", new_by_urls_words_path
 
-= form_tag create, method: :post do
-  = text_area_tag :urls, '', placeholder: '１行に１単語かいてください', rows: 10, cols: 100
+= form_tag words_path, method: :post do
+  = text_area_tag :words, '', placeholder: '１行に１単語かいてください', rows: 10, cols: 100
+  br
+  = check_box_tag :selected
+  = label_tag "selected", 'キーワード選択済みにする'
   = button_tag '取得', class: 'button', data: {'disable-with' => "更新中..."}

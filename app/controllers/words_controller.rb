@@ -44,7 +44,12 @@ class WordsController < ApplicationController
   end
 
   def create
+    options = {}
+    options = {selected: true} if params[:selected].to_b
+    KeywordRegisterService.register!(parse_words, options)
+    redirect_to words_path
   end
+
 
   def new_by_urls
   end
@@ -52,7 +57,7 @@ class WordsController < ApplicationController
   def register_by_urls
     ### NOTE: mecab は細かく単語を区切るのでキーワードを採掘しにくい
     ###       http://so-zou.jp/web-app/text/morpheme/ で採掘する
-    KeywordRegisterService.delay.multi_register!(parse_urls)
+    KeywordRegisterService.delay.multi_register_by_urls!(parse_urls)
     redirect_to words_path
   end
 
@@ -61,5 +66,10 @@ class WordsController < ApplicationController
   def parse_urls
     return [] unless params[:urls].present?
     params[:urls].split(/\r\n|\n/)
+  end
+
+  def parse_words
+    return [] unless params[:words].present?
+    params[:words].split(/\r\n|\n/)
   end
 end
