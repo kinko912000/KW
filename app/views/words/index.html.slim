@@ -1,7 +1,8 @@
 h3= "取得済キーワード: #{@count}"
-= form_tag register_words_path, method: :post do
-  = text_area_tag :urls, '', placeholder: '１行に１URLをかいてください', rows: 10, cols: 100
-  = button_tag '取得', class: 'button', data: {'disable-with' => "更新中..."}
+ul
+  li= link_to "URLから単語登録", new_by_urls_words_path
+  li= link_to "単語登録", new_word_path
+
 p
  | 未取得のCSVをダウンロード:
  = link_to "csv download", download_words_path

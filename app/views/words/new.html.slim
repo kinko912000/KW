@@ -1,0 +1,7 @@
+ul
+  li= link_to "ホーム", words_path
+  li= link_to "URLから単語登録", new_by_urls_path
+
+= form_tag create, method: :post do
+  = text_area_tag :urls, '', placeholder: '１行に１単語かいてください', rows: 10, cols: 100
+  = button_tag '取得', class: 'button', data: {'disable-with' => "更新中..."}

@@ -40,12 +40,23 @@ class WordsController < ApplicationController
     send_data csv_data, filename: "keywords_#{Time.current}"
   end
 
-  def register
+  def new
+  end
+
+  def create
+  end
+
+  def new_by_urls
+  end
+
+  def register_by_urls
     ### NOTE: mecab は細かく単語を区切るのでキーワードを採掘しにくい
     ###       http://so-zou.jp/web-app/text/morpheme/ で採掘する
     KeywordRegisterService.delay.multi_register!(parse_urls)
     redirect_to words_path
   end
+
+  private
 
   def parse_urls
     return [] unless params[:urls].present?
