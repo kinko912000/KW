@@ -19,6 +19,7 @@ gem "delayed_job"
 gem "delayed_job_active_record"
 gem 'google-adwords-api'
 gem 'ruby-gmail'
+gem 'ransack'
 
 # View
 gem 'sass-rails', '~> 5.0', require: false
