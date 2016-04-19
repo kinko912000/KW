@@ -2,7 +2,12 @@ module WordSearchService
   class Searcher
     def initialize(params = {})
       @params = params
-      @relation = Kw::Word.all
+
+      if @params.has_key?(:with_deleted) && @params[:with_deleted].to_b
+        @relation = Kw::Word.all
+      else
+        @relation = Kw::Word.enable
+      end
     end
 
     def result

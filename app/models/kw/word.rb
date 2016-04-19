@@ -5,5 +5,6 @@ module Kw
     scope :selected, -> { where(selected: true) }
     scope :unselected, -> { where(selected: false) }
     scope :has_query_volumes, -> { where('avg_searches > 0') }
+    scope :enable, -> { where(deleted_at: nil) }
   end
 end

@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :count_keywords
 
   def count_keywords
-    @count = Kw::Word.where.not(avg_searches: nil).count
+    @count = Kw::Word.has_query_volumes.enable.count
   end
 end
