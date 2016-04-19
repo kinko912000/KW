@@ -1,0 +1,18 @@
+#notice {
+    $c: #898989;
+    position: fixed;
+    top: -100px;
+    right: 10px;
+    background: $c;
+    background: rgba($c, 0.1);
+    border: 1px solid darken($c, 30%);
+    padding: 10px;
+    z-index: 3000;
+    b {
+        font-weight: bold;
+    }
+    &.is-show {
+        top: 80px;
+    }
+}
+

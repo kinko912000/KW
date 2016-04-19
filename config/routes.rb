@@ -4,4 +4,8 @@ Rails.application.routes.draw do
     post :register_by_urls, on: :collection
     get :download, on: :collection
   end
+
+  namespace :api do
+    resources :words, only: :destroy
+  end
 end

@@ -10,6 +10,7 @@ table
       th URL
       th 競合性
       th AdWords API
+      th NGワード
   tbody
     - @words.each do |word|
       tr
@@ -26,4 +27,6 @@ table
         td= word.competition
         td
           = "#{word.fetched ? '取得済' : '未取得'}"
+        td
+          = button_tag '不要単語登録', type: :button, class: 'js-unneed-word', data: {id: word.id}
 = paginate @words
