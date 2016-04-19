@@ -8,14 +8,12 @@ table
       th クエリ数(/月)
       th ランキング
       th URL
-      th 1位と2位両方同じ検索結果
-      th 1位のみ同じ検索結果
       th 競合性
       th AdWords API
   tbody
     - @words.each do |word|
       tr
-        td= word.name
+        td= link_to word.name, word_path(word)
         td
           = "#{word.selected ? '執筆' : '対象外'}"
         td= word.avg_searches
@@ -24,14 +22,7 @@ table
           - if word.rank_url.present?
             = link_to word.rank_url, word.rank_url
           - else
-            | 
-        - if word.primary_url.present?
-          - both_same_keywords = (@same_primary_url_list[word.primary_url].map(&:name) & @same_second_url_list[word.second_url].map(&:name)) - [word.name]
-          td= both_same_keywords.join(',')
-          td= (@same_primary_url_list[word.primary_url].map(&:name) - [word.name]).join(',')
-        - else
-          td= 'なし'
-          td= 'なし'
+            |
         td= word.competition
         td
           = "#{word.fetched ? '取得済' : '未取得'}"

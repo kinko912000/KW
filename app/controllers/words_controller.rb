@@ -3,13 +3,18 @@ require 'csv'
 
 class WordsController < ApplicationController
   def index
-    ### TODO: searcher に切り出し
     @words = WordSearchService::Searcher.new(parse_search_params).result
     @words = @words.page(params[:page]).per(30)
-    @same_primary_url_list = Kw::Word.where(primary_url: @words.map(&:primary_url)).
-      group_by { |word| word.primary_url }
-    @same_second_url_list = Kw::Word.where(second_url: @words.map(&:second_url)).
-      group_by { |word| word.second_url }
+  end
+
+  def show
+    @word = Kw::Word.find(params[:id])
+
+    @same_primary_url_list = Kw::Word.where(primary_url: @word.primary_url).
+      where.not(primary_url: nil).group_by(&:name)
+    @same_second_url_list = Kw::Word.where(second_url: @word.second_url).
+      where.not(second_url: nil).group_by(&:name)
+    @words = [@word].concat(@same_primary_url_list.values.concat(@same_second_url_list.values)).flatten.uniq
   end
 
   def download

@@ -1,0 +1,53 @@
+h1= @word.name
+p
+  | 検索結果1位:
+  - if @word.primary_url.present?
+    = link_to @word.primary_url, @word.primary_url
+  - else
+    | -
+p
+  | 検索結果2位:
+  - if @word.second_url.present?
+    = link_to @word.second_url, @word.second_url
+  - else
+    | -
+
+table
+  thead
+    tr
+      th キーワード名
+      th 執筆対象か
+      th クエリ数(/月)
+      th ランキング
+      th URL
+      th 検索結果1位
+      th 検索結果2位
+      th 競合性
+      th AdWords API
+  tbody
+    - @words.each do |word|
+      tr
+        td= word.name
+        td
+          = "#{word.selected ? '執筆' : '対象外'}"
+        td= word.avg_searches
+        td= word.rank
+        td
+          - if word.rank_url.present?
+            = link_to word.rank_url, word.rank_url
+          - else
+            |
+        td
+          - if @word.primary_url.present? && @word.primary_url == word.primary_url
+            | 一致
+          - else
+            | 不一致
+        td
+          - if @word.second_url.present? && @word.second_url == word.second_url
+            | 一致
+          - else
+            | 不一致
+        td= word.competition
+        td
+          = "#{word.fetched ? '取得済' : '未取得'}"
+
