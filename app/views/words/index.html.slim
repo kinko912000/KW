@@ -9,6 +9,7 @@ table
       th 1位と2位両方同じ検索結果
       th 1位のみ同じ検索結果
       th AdWords API
+      th 登録済
   tbody
     - @words.each do |word|
       tr
@@ -23,8 +24,5 @@ table
           td= 'なし'
           td= 'なし'
         td
-          - if word.fetched
-            | 取得済
-          - else
-            | 未取得
+          = "#{word.fetched ? '取得済' : '未取得'}"
 = paginate @words
