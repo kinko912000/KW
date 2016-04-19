@@ -48,5 +48,5 @@ end
 #Kw::Word.find_each do |word|
 Kw::Word.where(primary_url: nil).has_query_volumes.find_each do |word|
   GoogleSearchFetcher.update(word)
-  sleep(2)
+  sleep(5)
 end
