@@ -4,20 +4,21 @@ table
   thead
     tr
       th キーワード名
+      th 執筆対象か
       th クエリ数(/月)
-      th 競合性
       th ランキング
       th URL
       th 1位と2位両方同じ検索結果
       th 1位のみ同じ検索結果
+      th 競合性
       th AdWords API
-      th 登録済
   tbody
     - @words.each do |word|
       tr
         td= word.name
+        td
+          = "#{word.selected ? '執筆' : '対象外'}"
         td= word.avg_searches
-        td= word.competition
         td= word.rank
         td
           - if word.rank_url.present?
@@ -31,6 +32,7 @@ table
         - else
           td= 'なし'
           td= 'なし'
+        td= word.competition
         td
           = "#{word.fetched ? '取得済' : '未取得'}"
 = paginate @words
