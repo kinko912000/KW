@@ -4,27 +4,8 @@ require 'csv'
 class WordsController < ApplicationController
   def index
     ### TODO: searcher に切り出し
-    @words = Kw::Word.all
-
-    if params[:fetched].present?
-      if params[:fetched] == 'false'
-        @words = Kw::Word.unfetched
-      else
-        @words = Kw::Word.fetched
-      end
-    end
-
-    if params[:selected].present?
-      if params[:selected] == 'false'
-        @words = @words.unselected
-      else
-        @words = @words.selected
-      end
-    end
-
-    @words = @words.search(name_cont: params[:name]).result if params[:name].present?
-
-    @words = @words.order(avg_searches: :desc, updated_at: :desc).page(params[:page]).per(30)
+    @words = WordSearchService::Searcher.new(parse_search_params).result
+    @words = @words.page(params[:page]).per(30)
     @same_primary_url_list = Kw::Word.where(primary_url: @words.map(&:primary_url)).
       group_by { |word| word.primary_url }
     @same_second_url_list = Kw::Word.where(second_url: @words.map(&:second_url)).
@@ -64,6 +45,10 @@ class WordsController < ApplicationController
 
   private
 
+  def parse_search_params
+    attrs = [:fetched, :selected, :name, :sort_key]
+    params.slice(*attrs)
+  end
   def parse_urls
     return [] unless params[:urls].present?
     params[:urls].split(/\r\n|\n/)
