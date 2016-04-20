@@ -36,6 +36,29 @@ module KeywordRegisterService
     end
   end
 
+  def self.fetch_urls_by_word(keyword)
+    open(URI.encode(generate_search_url(keyword))) do |res|
+      begin
+        doc = Nokogiri::HTML(res)
+        doc.css('.g h3 a').each_with_object([]) do |dom, result|
+          link = dom.attribute('href').value.scan(/http.*/).first
+          next puts "nothing: #{dom.attribute('href').value}" unless link.present?
+          result << link.gsub(/&sa.*/, '')
+        end
+      rescue => e
+        puts "############# ERROR ##############"
+        puts "Error URL: #{url}"
+        puts e
+        nil
+      end
+    end
+  end
+
+  def self.generate_search_url(keyword)
+    base_uri = "https://www.google.co.jp/search?q="
+    "#{base_uri}#{keyword}"
+  end
+
   def self.filter_words(words)
     unregistered_words = words - Kw::Word.where(name: words).pluck(:name)
     unregistered_words.map { |name| Kw::Word.new(name: name) }
