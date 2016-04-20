@@ -1,4 +1,5 @@
-h1= @word.name
+h1 data="#{@word.id}"
+  = @word.name
 p
   | 検索結果1位:
   - if @word.primary_url.present?
@@ -16,6 +17,7 @@ table
   thead
     tr
       th キーワード名
+      th 類似チェック
       th 執筆対象か
       th= link_to 'クエリ数(/月)', words_path(params.merge(sort_key: :query_volumes))
       th ランキング
@@ -28,6 +30,13 @@ table
     - @words.each do |word|
       tr
         td= word.name
+        td
+          label
+            = radio_button_tag "radio_#{word.id}", 'same'
+            | 類似
+          label
+            = radio_button_tag "radio_#{word.id}", 'defferent'
+            | 違う
         td
           = "#{word.selected ? '執筆' : '対象外'}"
         td= word.avg_searches
