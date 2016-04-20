@@ -20,7 +20,8 @@ class WordsController < ApplicationController
       where.not(primary_url: nil).group_by(&:name)
     @same_second_url_list = Kw::Word.where(second_url: @word.second_url).
       where.not(second_url: nil).group_by(&:name)
-    @words = [@word].concat(@same_primary_url_list.values.concat(@same_second_url_list.values)).flatten.uniq
+    @words = [@word].concat(@same_primary_url_list.values.concat(@same_second_url_list.values).flatten.
+      sort_by { |word| [(word.second_url == @word.second_url).to_s, (word.primary_url == @word.primary_url).to_s] }.reverse).uniq
     @children_related_words = Kw::RelatedWord.related_words(@word.id).index_by(&:child_id)
     @parent_related_words = Kw::RelatedWord.related_words(@word.id).index_by(&:parent_id)
   end

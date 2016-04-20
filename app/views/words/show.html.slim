@@ -31,15 +31,16 @@ table
       tr
         td= link_to word.name, word_path(word.id)
         td
-          - is_same = @children_related_words[word.id].try(:same) || @parent_related_words[word.id].try(:same)
-          - registered = @children_related_words[word.id].present? || @parent_related_words[word.id].present?
+          - unless @word.name == word.name
+            - is_same = @children_related_words[word.id].try(:same) || @parent_related_words[word.id].try(:same)
+            - registered = @children_related_words[word.id].present? || @parent_related_words[word.id].present?
 
-          label
-            = radio_button_tag "radio_#{word.id}", true, registered && is_same, class: 'js-related-word'
-            | 類似
-          label
-            = radio_button_tag "radio_#{word.id}", false, registered && !is_same, class: 'js-related-word'
-            | 違う
+            label
+              = radio_button_tag "radio_#{word.id}", true, registered && is_same, class: 'js-related-word'
+              | 類似
+            label
+              = radio_button_tag "radio_#{word.id}", false, registered && !is_same, class: 'js-related-word'
+              | 違う
         td
           = "#{word.selected ? '執筆' : '対象外'}"
         td= word.avg_searches
