@@ -36,8 +36,8 @@ module KeywordRegisterService
     end
   end
 
-  def self.fetch_urls_by_word(keyword)
-    open(URI.encode(generate_search_url(keyword))) do |res|
+  def self.fetch_urls_by_word(keyword, options = {})
+    open(URI.encode(generate_search_url(keyword, options))) do |res|
       begin
         doc = Nokogiri::HTML(res)
         doc.css('.g h3 a').each_with_object([]) do |dom, result|
@@ -54,9 +54,13 @@ module KeywordRegisterService
     end
   end
 
-  def self.generate_search_url(keyword)
+  def self.generate_search_url(keyword, options = {})
     base_uri = "https://www.google.co.jp/search?q="
-    "#{base_uri}#{keyword}"
+    url = "#{base_uri}#{keyword}"
+    if options[:page]
+      url = "#{url}&start=#{(options[:page] - 1) * 10}"
+    end
+    url
   end
 
   def self.filter_words(words)
