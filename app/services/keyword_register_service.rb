@@ -57,9 +57,8 @@ module KeywordRegisterService
   def self.generate_search_url(keyword, options = {})
     base_uri = "https://www.google.co.jp/search?q="
     url = "#{base_uri}#{keyword}"
-    if options[:page]
-      url = "#{url}&start=#{(options[:page] - 1) * 10}"
-    end
+    url = "#{url}&start=#{(options[:page] - 1) * 10}" if options[:page]
+    url = "#{url}&tbm=nws" if options.has_key?(:news)
     url
   end
 
