@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :count_keywords
 
   def count_keywords
-    @count = Kw::Word.has_query_volumes.enable.count
+    @total_count = Kw::Word.enable.count
+    @query_keywords_count = Kw::Word.has_query_volumes.enable.count
+    @selected_query_volumes_count = Kw::Word.has_query_volumes.selected.enable.count
   end
 end
