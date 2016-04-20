@@ -17,8 +17,8 @@ table
   thead
     tr
       th キーワード名
-      th 類似チェック
       th 執筆対象か
+      th 類似チェック
       th= link_to 'クエリ数(/月)', words_path(params.merge(sort_key: :query_volumes))
       th ランキング
       th URL
@@ -31,6 +31,10 @@ table
       tr
         td= link_to word.name, word_path(word.id)
         td
+          = button_tag "#{word.selected ? '執筆対象です' : '対象外です'}", type: :button,
+            class: "js-selected-word #{word.selected ? 'active' : 'inactive'}",
+            data: {id: word.id}
+        td
           - unless @word.name == word.name
             - is_same = @children_related_words[word.id].try(:same) || @parent_related_words[word.id].try(:same)
             - registered = @children_related_words[word.id].present? || @parent_related_words[word.id].present?
@@ -41,8 +45,6 @@ table
             label
               = radio_button_tag "radio_#{word.id}", false, registered && !is_same, class: 'js-related-word'
               | 違う
-        td
-          = "#{word.selected ? '執筆' : '対象外'}"
         td= word.avg_searches
         td= word.rank
         td

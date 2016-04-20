@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :words, only: :destroy
+    resources :words, only: [:destroy, :update]
     resources :related_words, only: :create
   end
 end
