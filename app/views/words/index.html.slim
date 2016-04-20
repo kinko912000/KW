@@ -10,6 +10,8 @@ table
       th URL
       th 競合性
       th AdWords API
+      th 1位関連ワード数
+      th 1位&2位関連ワード数
       th NGワード
   tbody
     - @words.each do |word|
@@ -27,6 +29,10 @@ table
         td= word.competition
         td
           = "#{word.fetched ? '取得済' : '未取得'}"
+        td
+          = @same_primary_url_count[word.primary_url]
+        td
+          = @same_second_url_count[word.second_url]
         td
           = button_tag '不要単語登録', type: :button, class: 'js-unneed-word', data: {id: word.id}
 = paginate @words

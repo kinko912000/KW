@@ -5,6 +5,12 @@ class WordsController < ApplicationController
   def index
     @words = WordSearchService::Searcher.new(parse_search_params).result
     @words = @words.page(params[:page]).per(30)
+    @same_primary_url_count = Kw::Word.where(primary_url: @words.map(&:primary_url)).
+      where.not(primary_url: nil).group(:primary_url).count.
+      each_with_object({}) { |(url, count), result| result[url] = count - 1 }
+    @same_second_url_count = Kw::Word.where(second_url: @words.map(&:second_url)).
+      where.not(second_url: nil).group(:second_url).count.
+      each_with_object({}) { |(url, count), result| result[url] = count - 1 }
   end
 
   def show
