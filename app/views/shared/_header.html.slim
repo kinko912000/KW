@@ -15,8 +15,7 @@ table
       td
         ul
           li= link_to "全表示", words_path
-          li= link_to "Adwords API 取得済一覧", words_path(fetched: true)
-          li= link_to "未選択キーワード", words_path(selected: false)
+          li= link_to "執筆対象ワード", words_path(selected: true, sort_key: :query_volumes)
         = form_tag words_path, method: :get do
           = text_field_tag :name
           = button_tag '検索'
