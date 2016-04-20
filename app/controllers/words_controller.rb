@@ -1,9 +1,14 @@
-require 'open-uri'
 require 'csv'
 
 class WordsController < ApplicationController
   def index
     @words = WordSearchService::Searcher.new(parse_search_params).result
+
+    if params[:simple_view].to_b
+      render 'words/simple_index'
+      return
+    end
+
     @words = @words.page(params[:page]).per(30)
     @same_primary_url_count = Kw::Word.where(primary_url: @words.map(&:primary_url)).
       where.not(primary_url: nil).group(:primary_url).count.

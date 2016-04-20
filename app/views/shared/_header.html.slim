@@ -22,6 +22,8 @@ table
 
       td
         ul
-          | クエリ数未取得キーワード:
-          = link_to "csv download", download_words_path
+          li
+            | クエリ数未取得キーワード:
+            = link_to "csv download", download_words_path
+          li= link_to "執筆対象ワード", words_path(selected: true, sort_key: :query_volumes, simple_view: true)
 hr
