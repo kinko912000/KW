@@ -21,6 +21,8 @@ class WordsController < ApplicationController
     @same_second_url_list = Kw::Word.where(second_url: @word.second_url).
       where.not(second_url: nil).group_by(&:name)
     @words = [@word].concat(@same_primary_url_list.values.concat(@same_second_url_list.values)).flatten.uniq
+    @children_related_words = Kw::RelatedWord.related_words(@word.id).index_by(&:child_id)
+    @parent_related_words = Kw::RelatedWord.related_words(@word.id).index_by(&:parent_id)
   end
 
   def download
