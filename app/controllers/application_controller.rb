@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def count_keywords
     @total_count = Kw::Word.enable.count
     @query_keywords_count = Kw::Word.has_query_volumes.enable.count
-    @orchid_keywords_count = Kw::Word.has_query_volumes.enable.search(name_cont: "胡蝶蘭").result.count
+    @orchid_keywords_count = Kw::Word.has_query_volumes.enable.search(name_cont: "胡蝶蘭").result.selected.count
     @selected_query_volumes_count = Kw::Word.has_query_volumes.selected.enable.count
   end
 end
