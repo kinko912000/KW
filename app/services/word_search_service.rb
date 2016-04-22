@@ -31,7 +31,7 @@ module WordSearchService
       when :rank
         Kw::Word.where('rank > 0').order(rank: :asc)
       when :query_volumes
-        Kw::Word.where("query_volumes > 0").order(avg_searches: :desc)
+        Kw::Word.where("avg_searches > 0").order(avg_searches: :desc)
       end
     end
   end
