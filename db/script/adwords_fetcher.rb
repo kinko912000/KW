@@ -26,13 +26,14 @@ module AdwordsFetcher
     offset = 0
     results = []
 
-    begin
+    while true do
       page = targeting_idea_srv.get(selector)
       results += page[:entries] if page and page[:entries]
 
       offset += PAGE_SIZE
       selector[:paging][:start_index] = offset
-    end while offset < page[:total_num_entries]
+      break unless offset < page[:total_num_entries]
+    end
     results
   end
 
