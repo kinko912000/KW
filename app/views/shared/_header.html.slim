@@ -15,7 +15,7 @@ table
       td
         ul
           li= link_to "全表示", words_path
-          li= link_to "執筆対象ワード", words_path(selected: true, sort_key: :query_volumes)
+          li= link_to "執筆対象ワード", words_path(selected: true, sort_key: :query_volumes, name: "胡蝶蘭")
         = form_tag words_path, method: :get do
           = text_field_tag :name
           = button_tag '検索'
@@ -25,5 +25,5 @@ table
           li
             | クエリ数未取得キーワード:
             = link_to "csv download", download_words_path
-          li= link_to "執筆対象ワード", words_path(selected: true, sort_key: :query_volumes, simple_view: true)
+          li= link_to "執筆対象ワード", words_path(selected: true, sort_key: :query_volumes, simple_view: true, name: "胡蝶蘭")
 hr
