@@ -28,6 +28,7 @@ table
       th AdWords API
   tbody
     - @words.each do |word|
+      - next unless word.selected
       tr
         td= link_to word.name, word_path(word.id)
         td
