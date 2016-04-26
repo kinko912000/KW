@@ -30,7 +30,8 @@ module KW
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.autoload_paths += %W(#{config.root}/app/services #{config.root}/lib/google)
+    config.autoload_paths += %W(#{config.root}/app/services)
+    config.autoload_paths += %W(#{config.root}/lib/autoload #{config.root}/lib/google #{config.root}/lib/util)
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

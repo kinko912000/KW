@@ -18,6 +18,7 @@ gem 'natto'
 gem "delayed_job"
 gem "delayed_job_active_record"
 gem 'google-adwords-api'
+gem 'google_drive'
 gem 'ruby-gmail'
 gem 'ransack'
 
