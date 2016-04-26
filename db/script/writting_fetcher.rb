@@ -12,7 +12,7 @@ module WrittingFetcher
 
     (1..MAX_KEYWORD_NUMS).to_a.each do |index|
       keyword = @client.sheet[index + 3, 1]
-      article_url = "https://hitohana.tokyo/note/#{@client.sheet[index, 4].slice(/\d+/)}" if url?(@client.sheet[index, 4])
+      article_url = "https://hitohana.tokyo/note/#{@client.sheet[index + 3, 4].slice(/\d+/)}" if url?(@client.sheet[index + 3, 4])
 
       word = Kw::Word.find_by(name: keyword)
 

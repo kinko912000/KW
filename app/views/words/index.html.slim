@@ -7,7 +7,8 @@ table
       th 執筆対象か
       th= link_to 'クエリ数(/月)', words_path(params.merge(sort_key: :query_volumes))
       th ランキング
-      th URL
+      th 検索結果URL
+      th 執筆URL
       th 競合性
       th AdWords API
       th 1位関連ワード数
@@ -24,8 +25,9 @@ table
         td
           - if word.rank_url.present?
             = link_to word.rank_url, word.rank_url
-          - else
-            |
+        td
+          - if word.article_url.present?
+            = link_to word.article_url, word.article_url
         td= word.competition
         td
           = "#{word.fetched ? '取得済' : '未取得'}"
